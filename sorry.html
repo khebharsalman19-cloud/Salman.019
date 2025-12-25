@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm So Sorry ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: #ffdde1;
+            background-image: linear-gradient(0deg, #ffdde1 0%, #ee9ca7 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            animation: floatUp linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* The Card Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* The Envelope Section */
+        .envelope-wrapper {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #ff5e6c;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ff7b87;
+            border-radius: 10px;
+        }
+
+        .heart-seal {
+            background: #fff;
+            color: #ff5e6c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 5;
+            animation: pulse 1.5s infinite;
+        }
+
+        .click-hint {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* The Letter (Hidden by default) */
+        .letter {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .letter h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff5e6c;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .letter p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 200px;
+            background-color: #ffe6e6; /* Placeholder color */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #ff5e6c;
+            font-style: italic;
+            border: 2px dashed #ff5e6c;
+        }
+
+        /* Buttons */
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .btn-yes {
+            background: #ff5e6c;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 94, 108, 0.4);
+        }
+
+        .btn-yes:hover {
+            background: #ff3b4e;
+            transform: translateY(-2px);
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #555;
+            position: relative; /* Important for moving effect */
+        }
+
+        /* Success Message */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+
+        .success-overlay h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container">
+        
+        <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
+            <div class="envelope">
+                <div class="heart-seal">❤️</div>
+            </div>
+            <p class="click-hint">Tap to open...</p>
+        </div>
+
+        <div class="letter" id="letter">
+            <h1>I'm Sorry, My Love</h1>
+            
+            <p>
+                My Dearest Wife, <br><br>
+                I am writing this because I was wrong, and I hate seeing you upset. You mean the entire world to me, and my day is dark when you aren't smiling.
+            </p>
+            
+           <div class="photo-frame">
+                <img src="C:\Users\LENOVO\Downloads\WhatsApp Image 2025-12-08 at 21.17.57_3ac23787.jpg" alt="Our Happiest Photo">
+            </div>
+
+            <p>
+                I messed up. I know I can be stubborn/forgetful sometimes, but my love for you is constant. Please forgive me? I promise to make it up to you with dinner and a foot massage!
+            </p>
+            <div class="btn-group">
+                <button class="btn-yes" onclick="celebrate()">Yes, I Forgive You ❤️</button>
+                <button class="btn-no" id="btnNo" onmouseover="moveButton()">No 😤</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="success-overlay" id="success">
+        <h2>I LOVE YOU! ❤️</h2>
+        <p>Thank you for forgiving me!</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // 1. Create Floating Hearts Background
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            
+            document.getElementById('hearts-container').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // 2. Open the Letter
+        function openLetter() {
+            const envelope = document.getElementById('envelope');
+            const letter = document.getElementById('letter');
+
+            envelope.classList.add('hidden');
+            letter.style.display = 'block';
+        }
+
+        // 3. Make the "No" button run away
+        function moveButton() {
+            const btnNo = document.getElementById('btnNo');
+            const x = Math.random() * (window.innerWidth - 100); // Random X position
+            const y = Math.random() * (window.innerHeight - 100); // Random Y position
+            
+            // Just move it slightly within the card first, then go crazy if you want
+            // For now, let's keep it simple: swap position to absolute
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        // 4. Celebration Logic
+        function celebrate() {
+            const successOverlay = document.getElementById('success');
+            const letter = document.getElementById('letter');
+            
+            letter.style.display = 'none';
+            successOverlay.style.display = 'flex';
+
+            // Trigger Confetti
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+
+            function random(min, max) {
+            return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            var particleCount = 50 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
